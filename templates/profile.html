@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f7fa;
+      text-align: center;
+    }
+    .navbar {
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .navbar a {
+      text-decoration: none;
+      background-color: #3498db;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    h2 {
+      color: #333;
+    }
+    .score {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 700px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #e9e9e9;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    {% for name, link in nav_links %}
+      <a href="{{ link }}">{{ name }}</a>
+    {% endfor %}
+  </div>
+
+  <h2>Welcome, {{ user.email }}!</h2>
+  <p class="score">Current score: <strong>{{ user.points }}</strong></p>
+
+  {% if mistakes %}
+    <h3>Your Mistakes</h3>
+    <table>
+      <tr>
+        <th>Dutch Phrase</th>
+        <th>Correct Word</th>
+        <th>Your Answer</th>
+      </tr>
+      {% for m in mistakes %}
+        <tr>
+          <td>{{ m.phrase }}</td>
+          <td>{{ m.correct_word }}</td>
+          <td>{{ m.user_answer }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No mistakes yet. You're doing great! 🎉</p>
+  {% endif %}
+</body>
+</html>

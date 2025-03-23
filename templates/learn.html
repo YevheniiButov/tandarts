@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Learn Dutch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% if mode == 'auto' %}
+    <meta http-equiv="refresh" content="{{ timer }}">
+  {% endif %}
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .navbar {
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .navbar a {
+      text-decoration: none;
+      background-color: #3498db;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .card {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 100%;
+      width: 90%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .phrase {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .translation {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #555;
+    }
+    img {
+      margin-top: 15px;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    audio {
+      margin-top: 15px;
+    }
+    .controls {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    {% for name, link in nav_links %}
+      <a href="{{ link }}">{{ name }}</a>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <div class="phrase">{{ phrase.nl }}</div>
+    <div class="translation">{{ phrase.en }}</div>
+
+    {% if audio_url %}
+    <audio controls>
+      <source src="{{ audio_url }}" type="audio/mpeg">
+      Your browser does not support audio.
+    </audio>
+    {% endif %}
+
+    {% if image_url %}
+    <img src="{{ image_url }}" alt="Illustration">
+    {% endif %}
+  </div>
+
+  <div class="controls">
+    {% if mode == 'manual' %}
+    <form method="get" action="/learn">
+      <input type="hidden" name="mode" value="manual">
+      <button type="submit">Next Phrase</button>
+    </form>
+    {% endif %}
+
+    <div style="margin-top: 15px;">
+      <span>Mode:</span>
+      {% if mode == 'manual' %}
+        <strong>Manual</strong> |
+        <a href="/learn?mode=auto&timer={{ timer }}">Auto</a>
+      {% else %}
+        <a href="/learn?mode=manual">Manual</a> |
+        <strong>Auto</strong>
+      {% endif %}
+    </div>
+
+    {% if mode == 'auto' %}
+    <div style="margin-top: 10px;">
+      Timer:
+      {% for t in [3, 5, 10] %}
+        {% if timer == t|string %}
+          <strong>{{ t }}s</strong>
+        {% else %}
+          <a href="/learn?mode=auto&timer={{ t }}">{{ t }}s</a>
+        {% endif %}
+        {% if not loop.last %} | {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>

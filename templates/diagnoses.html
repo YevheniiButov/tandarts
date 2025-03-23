@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dental diagnoses</title>
+</head>
+<body>
+    <h1>Dental diagnoses (EN → NL)</h1>
+    <ul>
+        {% for diagnose in diagnoses %}
+            <li>{{ diagnose.en }} → {{ diagnose.nl }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

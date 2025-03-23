@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dental phrases</title>
+</head>
+<body>
+    <h1>Dental freqeuntly used phrases (EN → NL)</h1>
+    <ul>
+        {% for phrase in phrases %}
+            <li>{{ phrase.en }} → {{ phrase.nl }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

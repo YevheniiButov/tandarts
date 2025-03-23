@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Result</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f4f7fa;
+    }
+    .navbar {
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .navbar a {
+      text-decoration: none;
+      background-color: #3498db;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .result {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      max-width: 90%;
+      margin: 0 auto 20px auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 10px;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    tr:nth-child(even) {
+      background-color: #fdfdfd;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    {% for name, link in nav_links %}
+      <a href="{{ link }}">{{ name }}</a>
+    {% endfor %}
+  </div>
+
+  <div class="result">
+    <h2>{{ result }}</h2>
+    {% if points is not none %}
+      <p>Your total score: <strong>{{ points }}</strong></p>
+    {% endif %}
+    <a href="/test">Try Again</a>
+  </div>
+
+  {% if mistakes %}
+    <h3>Review Your Mistakes</h3>
+    <table>
+      <tr>
+        <th>Dutch Phrase</th>
+        <th>Your Answer</th>
+        <th>Correct Word</th>
+      </tr>
+      {% for m in mistakes %}
+        <tr>
+          <td>{{ m.phrase }}</td>
+          <td>{{ m.user_answer }}</td>
+          <td>{{ m.correct_word }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% endif %}
+
+</body>
+</html>
