@@ -87,7 +87,10 @@
       <p>Great job! You had no mistakes!</p>
     {% endif %}
 
-    <a href="/test" class="btn">Try Again</a>
+    <form method="post" action="/test">
+      <input type="hidden" name="restart" value="1">
+      <button type="submit" class="btn">Try Again</button>
+    </form>
   </div>
 </body>
 </html>
