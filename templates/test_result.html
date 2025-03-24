@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Test Result</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Complete</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #f4f7fa;
       text-align: center;
       padding: 20px;
-      background-color: #f4f7fa;
     }
     .navbar {
       margin-bottom: 20px;
@@ -18,73 +18,76 @@
       gap: 10px;
     }
     .navbar a {
-      text-decoration: none;
       background-color: #3498db;
       color: white;
       padding: 8px 14px;
       border-radius: 6px;
+      text-decoration: none;
       font-size: 14px;
     }
-    .result {
+    .card {
       background: white;
       padding: 20px;
       border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    h2 {
+      color: #2c3e50;
+    }
+    .score {
+      font-size: 22px;
       margin-bottom: 20px;
-      max-width: 90%;
-      margin: 0 auto 20px auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    table {
-      width: 100%;
-      max-width: 700px;
-      margin: 0 auto;
-      border-collapse: collapse;
+    .mistake {
+      text-align: left;
+      margin: 10px 0;
+      padding: 10px;
+      background: #fbeaea;
+      border-left: 5px solid red;
     }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px 10px;
+    .mistake strong {
+      color: #e74c3c;
     }
-    th {
-      background-color: #f0f0f0;
-    }
-    tr:nth-child(even) {
-      background-color: #fdfdfd;
+    .btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-
   <div class="navbar">
     {% for name, link in nav_links %}
       <a href="{{ link }}">{{ name }}</a>
     {% endfor %}
   </div>
 
-  <div class="result">
-    <h2>{{ result }}</h2>
-    {% if points is not none %}
-      <p>Your total score: <strong>{{ points }}</strong></p>
-    {% endif %}
-    <a href="/test">Try Again</a>
-  </div>
+  <div class="card">
+    <h2>Test Complete!</h2>
+    <div class="score">Your final score: {{ score }}</div>
 
-  {% if mistakes %}
-    <h3>Review Your Mistakes</h3>
-    <table>
-      <tr>
-        <th>Dutch Phrase</th>
-        <th>Your Answer</th>
-        <th>Correct Word</th>
-      </tr>
+    {% if mistakes %}
+      <h3>Review your mistakes:</h3>
       {% for m in mistakes %}
-        <tr>
-          <td>{{ m.phrase }}</td>
-          <td>{{ m.user_answer }}</td>
-          <td>{{ m.correct_word }}</td>
-        </tr>
+        <div class="mistake">
+          <strong>Phrase:</strong> {{ m.phrase }}<br>
+          <strong>Your answer:</strong> {{ m.user_answer }}<br>
+          <strong>Correct word:</strong> {{ m.correct_word }}
+        </div>
       {% endfor %}
-    </table>
-  {% endif %}
+    {% else %}
+      <p>Great job! You had no mistakes!</p>
+    {% endif %}
 
+    <a href="/test" class="btn">Try Again</a>
+  </div>
 </body>
 </html>

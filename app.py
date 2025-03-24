@@ -138,10 +138,13 @@ def test():
 
     test_index = session['test_index']
     test_phrases = session['test_phrases']
+
+    if test_index >= len(test_phrases):
+        return render_template("test_result.html", score=session['score'], mistakes=session['mistakes'])
+
     score = session.get('score', 0)
     phrase = test_phrases[test_index]
 
-    # выбрать пропущенное слово один раз
     if 'current_phrase' not in session or session.get('current_phrase') != phrase['nl']:
         words = phrase['nl'].split()
         missing_index = random.randint(0, len(words) - 1)
@@ -185,7 +188,8 @@ def test():
         session.pop('missing_word', None)
         session.pop('masked_phrase', None)
         session.pop('current_phrase', None)
-        return redirect(url_for('test'))
+
+        return render_template("test.html", question=question, translation=phrase['en'], hint=hint, score=session['score'], number=test_index+1, user_answer=user_answer, is_correct=is_correct, correct_word=correct_word)
 
     return render_template("test.html", question=question, translation=phrase['en'], hint=hint, score=score, number=test_index+1)
 
