@@ -130,6 +130,14 @@ def test():
     if not all_phrases:
         return "No phrases found."
 
+    # Сбросить тест, если нажата кнопка "Try Again"
+    if request.method == 'POST' and request.form.get('restart') == '1':
+        session.pop('test_phrases', None)
+        session.pop('test_index', None)
+        session.pop('score', None)
+        session.pop('mistakes', None)
+        return redirect(url_for('test'))
+
     if 'test_phrases' not in session or 'test_index' not in session:
         session['test_phrases'] = random.sample(all_phrases, min(10, len(all_phrases)))
         session['test_index'] = 0
