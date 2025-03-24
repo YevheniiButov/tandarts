@@ -99,6 +99,7 @@
         <br>
         <button type="submit">Submit</button>
       </form>
+
     {% elif user_answer is defined %}
       {% if is_correct %}
         <p class="correct">✅ Correct! The word was: {{ correct_word }}</p>
@@ -109,6 +110,7 @@
       <form method="get" action="/test">
         <button type="submit">Next</button>
       </form>
+
     {% else %}
       <form method="post">
         <input type="text" name="answer" placeholder="Enter missing word..." required>
